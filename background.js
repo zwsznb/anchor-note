@@ -1,4 +1,4 @@
-const match_url = 'https://juejin.cn/post/6844903677828792333'
+const match_url = 'https://linux.vbird.org/linux_basic/centos7/0320bash.php'
 async function getCurrentTab() {
     let queryOptions = { active: true, lastFocusedWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);

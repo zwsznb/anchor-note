@@ -16,11 +16,12 @@ add_button.onclick = () => {
 };
 
 
-
+//暂时未算滚动条的宽度
 function add_anchor(height) {
-    console.log(height);
     let anchor = document.createElement("div");
+    let page = (document.compatMode && document.compatMode == 'CSS1Compat') ? document.documentElement : document.body;
+    let ratio = height / page.offsetHeight;
     anchor.className += ' anchor'
-    anchor.style.top = `${height}px`;
+    anchor.style.top = `${window.innerHeight*ratio}px`;
     body.append(anchor);
 }
