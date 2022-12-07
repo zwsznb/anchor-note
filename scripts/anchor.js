@@ -11,6 +11,7 @@ add_button.onclick = () => {
     console.log("添加锚点");
     //添加锚点或者连带笔记，还是先添加锚点后添加笔记？
     add_anchor();
+    getCurrentTab().then(result => console.log(result));
 };
 
 
@@ -66,6 +67,8 @@ function scrollToAnchor(anchor) {
     scrollTo(0, anchor.top_percent * getPageHeight());
 }
 
-
-
-function
+async function getCurrentTab() {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    let [tab] = await chrome.tabs.query(queryOptions);
+    return tab;
+}
