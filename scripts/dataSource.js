@@ -1,67 +1,52 @@
-function getChromeData() {
-    return chrome.storage.local.get("anchorData");
+function getChromeData(key) {
+    chrome.storage.local.get(key);
 }
 
-function saveChromeData(value) {
-    chrome.storage.local.set({ anchorData: value }).then(() => {});
-}
-
-//锚点
-function saveAnchor(value) {
-    //先查看当前存储中是否存有该网址的数据
-    getChromeData().then(result => {
-        if (result.anchorData) {
-            return;
-        }
-        for (let i = 0; i < result.auchorData.lenght; i++) {
-            if (result.auchorData[i].url === location.href) {
-                result.auchorData[i].anchor_list.push(value);
-            } else {
-                result.auchorData.push({ url: location.href, anchor_list: [value] })
-            }
-        }
-        saveChromeData(result.anchorData);
+function saveChromeData(key, value) {
+    chrome.storage.local.set({
+        [key]: value
     });
 }
 
-function saveNote(anchorId, value) {
-    getChromeData().then(result => {
-        if (result.anchorData) {
-            return;
-        }
-        for (let i = 0; i < result.auchorData.lenght; i++) {
-            if (result.auchorData[i].url === location.href) {
-                for (let anchor in result.auchorData[i].anchor_list) {
-                    if (anchor.id === anchorId) {
-                        anchor.note = value;
-                    }
-                }
-            }
-        }
-        saveChromeData(result.anchorData);
+function addAnchorInChromeStorage(anchor) {
+    getChromeData(location.href).then(result => {
+        result[location.href].push(anchor);
+        saveChromeData(location.href, result[location.href]);
     });
 }
 
-// function delAnchor(anchorId) {
-//     getChromeData().then(result => {
-//         if (result.anchorData) {
-//             return;
-//         }
-//         for (let i = 0; i < result.auchorData.lenght; i++) {
-//             if (result.auchorData[i].url === location.href) {
-//                 for (let anchor in result.auchorData[i].anchor_list) {
-//                     if (anchor.id === anchorId) {
-//                         anchor.note = value;
-//                     }
-//                 }
-//             }
-//         }
-//         saveChromeData(result.anchorData);
-//     });
-// }
-
-//清空笔记
-function clearNote() {
-    chrome.storage.local.set({ anchorData: null }).then(() => {});
+function findAnchorInChromeStorage(anchorId, func) {
+    getChromeData().then(result => {
+        for (let i = 0; i < result[location.href].lenght; i++) {
+            if (result[location.href][i].id === anchorId) {
+                func(result[location.href][i]);
+            }
+        }
+    })
 }
-//优化的话我觉得可以采用索引表的方式
+
+function delAnchorInChromeStorage(anchorId, func) {
+    getChromeData().then(result => {
+        for (let i = 0; i < result[location.href].lenght; i++) {
+            if (result[location.href][i].id === anchorId) {
+                result[location.href].splice(i, 1);
+                func();
+                return;
+            }
+        }
+        saveChromeData(location.href, result[location.href]);
+    })
+}
+
+function saveAnchorInChromeStorage(anchorId, note, func) {
+    getChromeData().then(result => {
+        for (let i = 0; i < result[location.href].lenght; i++) {
+            if (result[location.href][i].id === anchorId) {
+                result[location.href][i].note = note;
+                func();
+                return;
+            }
+        }
+        saveChromeData(location.href, result[location.href]);
+    })
+}
