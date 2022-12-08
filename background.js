@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 chrome.action.onClicked.addListener(async(tab) => {
     await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ["/scripts/anchor.js", "/scripts/dataSource.js"]
+        files: ["/scripts/anchor.js", "/scripts/dataSource.js", "/scripts/note.js"]
     }, () => {})
     await chrome.scripting.insertCSS({
         target: { tabId: tab.id },

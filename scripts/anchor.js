@@ -11,9 +11,10 @@ add_button.onclick = () => {
     console.log("添加锚点");
     //添加锚点或者连带笔记，还是先添加锚点后添加笔记？
     add_anchor();
-    getCurrentTab().then(result => console.log(result));
 };
-
+body.onclick = () => {
+    note.style.display = 'none';
+};
 
 //暂时未算滚动条的宽度
 function add_anchor() {
@@ -29,12 +30,27 @@ function createAnchor(height) {
     //持久化存储,存取锚点用百分比,body.offsetHeight
     let ratio = height / getPageHeight();
     anchor.className += ' anchor';
+    //TODO
     anchor.id = `anchor${anchor_list.length}`;
     anchor.style.top = `${window.innerHeight*ratio}px`;
-    anchor.onclick = function() {
+    anchor.onclick = function(e) {
+        stopProp(e);
         let anchor_tmp = findAnchor(this.id);
         scrollToAnchor(anchor_tmp);
     }
+    anchor.onmouseover = function() {
+        note.style.display = 'block';
+        note.setAttribute('data-id', this.id);
+        for (let i in anchor_list) {
+            if (anchor_list[i].id === this.id) {
+                note_content_block.innerText = anchor_list[i].note === '' ? "添加笔记" : anchor_list[i].note;
+                return;
+            }
+        }
+    };
+
+
+
     return {
         anchor: anchor,
         anchor_node: {
@@ -44,7 +60,6 @@ function createAnchor(height) {
         }
     }
 }
-
 
 function findAnchor(id) {
     let anchor_tmp = null;
@@ -65,10 +80,4 @@ function getPageHeight() {
 //滚动条滚动
 function scrollToAnchor(anchor) {
     scrollTo(0, anchor.top_percent * getPageHeight());
-}
-
-async function getCurrentTab() {
-    let queryOptions = { active: true, lastFocusedWindow: true };
-    let [tab] = await chrome.tabs.query(queryOptions);
-    return tab;
 }
