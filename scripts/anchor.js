@@ -30,6 +30,7 @@ function createAnchor(height) {
     //持久化存储,存取锚点用百分比,body.offsetHeight
     let ratio = height / getPageHeight();
     anchor.className += ' anchor';
+    //TODO 这是个bug，待修复
     anchor.id = `anchor${getAllAnchorCount()}`;
     anchor.style.top = `${window.innerHeight*ratio}px`;
     anchor.onclick = function(e) {

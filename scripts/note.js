@@ -23,16 +23,17 @@ edit.onclick = function() {
 del.onclick = function() {
     console.log("删除");
     //删除锚点数据
-    delAnchorInChromeStorage(note.getAttribute('data-id', () => {
+    delAnchorInChromeStorage(note.getAttribute('data-id'), () => {
         //移除锚点
         body.removeChild(document.getElementById(note.getAttribute('data-id')));
         //关闭笔记弹窗
         note.style.display = 'none';
-    }));
+    });
 
 };
 save.onclick = function() {
     note_content_block.contentEditable = false;
+    console.log(note_content_block.textContent);
     saveAnchorInChromeStorage(note.getAttribute('data-id'), note_content_block.textContent, () => {});
 };
 

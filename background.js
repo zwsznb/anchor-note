@@ -6,6 +6,9 @@ chrome.action.onClicked.addListener(async(tab) => {
             }).then(() => {
                 console.log("init data");
             });
+        } else {
+            //TODO 初始化所有的锚点
+
         }
     });
 

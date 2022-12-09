@@ -16,23 +16,23 @@ function addAnchorInChromeStorage(anchor) {
 }
 
 function findAnchorInChromeStorage(anchorId, func) {
-    getChromeData().then(result => {
-        for (let i = 0; i < result[location.href].lenght; i++) {
+    getChromeData(location.href).then(result => {
+        for (let i = 0; i < result[location.href].length; i++) {
             if (result[location.href][i].id === anchorId) {
                 func(result[location.href][i]);
-                return;
+                break;
             }
         }
     })
 }
 
 function delAnchorInChromeStorage(anchorId, func) {
-    getChromeData().then(result => {
-        for (let i = 0; i < result[location.href].lenght; i++) {
+    getChromeData(location.href).then(result => {
+        for (let i = 0; i < result[location.href].length; i++) {
             if (result[location.href][i].id === anchorId) {
                 result[location.href].splice(i, 1);
                 func();
-                return;
+                break;
             }
         }
         saveChromeData(location.href, result[location.href]);
@@ -40,12 +40,13 @@ function delAnchorInChromeStorage(anchorId, func) {
 }
 
 function saveAnchorInChromeStorage(anchorId, note, func) {
-    getChromeData().then(result => {
-        for (let i = 0; i < result[location.href].lenght; i++) {
+    getChromeData(location.href).then(result => {
+        console.log(result[location.href], anchorId);
+        for (let i = 0; i < result[location.href].length; i++) {
             if (result[location.href][i].id === anchorId) {
                 result[location.href][i].note = note;
                 func();
-                return;
+                break;
             }
         }
         saveChromeData(location.href, result[location.href]);
