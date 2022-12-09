@@ -22,7 +22,7 @@ function add_anchor() {
     let scroll_height = document.body.scrollTop || document.documentElement.scrollTop;
     let { anchor, anchor_node } = createAnchor(scroll_height);
     body.append(anchor);
-    anchor_list.push(anchor_node);
+    addAnchorInChromeStorage(anchor_node);
 }
 
 function createAnchor(height) {
@@ -30,25 +30,20 @@ function createAnchor(height) {
     //持久化存储,存取锚点用百分比,body.offsetHeight
     let ratio = height / getPageHeight();
     anchor.className += ' anchor';
-    //TODO
-    anchor.id = `anchor${anchor_list.length}`;
+    anchor.id = `anchor${getAllAnchorCount()}`;
     anchor.style.top = `${window.innerHeight*ratio}px`;
     anchor.onclick = function(e) {
         stopProp(e);
-        let anchor_tmp = findAnchor(this.id);
-        scrollToAnchor(anchor_tmp);
+        scrollToAnchor(this);
     }
     anchor.onmouseover = function() {
         note.style.display = 'block';
         note.setAttribute('data-id', this.id);
-        for (let i in anchor_list) {
-            if (anchor_list[i].id === this.id) {
-                note_content_block.innerText = anchor_list[i].note === '' ? "添加笔记" : anchor_list[i].note;
-                return;
-            }
-        }
+        findAnchorInChromeStorage(this.id, (anchor) => {
+            note_content_block.innerText = anchor.note === '' ? "添加笔记" : anchor.note;
+        })
     };
-
+    anchor.setAttribute('data-ratio', ratio);
 
 
     return {
@@ -61,16 +56,11 @@ function createAnchor(height) {
     }
 }
 
-function findAnchor(id) {
-    let anchor_tmp = null;
-    for (let i = 0; i < anchor_list.length; i++) {
-        if (anchor_list[i].id === id) {
-            anchor_tmp = anchor_list[i];
-            break;
-        }
-    }
-    return anchor_tmp;
+
+function getAllAnchorCount() {
+    return document.getElementsByClassName('anchor').length;
 }
+
 
 function getPageHeight() {
     let page = (document.compatMode && document.compatMode == 'CSS1Compat') ? document.documentElement : document.body;
@@ -79,5 +69,5 @@ function getPageHeight() {
 
 //滚动条滚动
 function scrollToAnchor(anchor) {
-    scrollTo(0, anchor.top_percent * getPageHeight());
+    scrollTo(0, anchor.getAttribute('data-ratio') * getPageHeight());
 }

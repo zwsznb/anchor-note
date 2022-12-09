@@ -23,16 +23,17 @@ edit.onclick = function() {
 del.onclick = function() {
     console.log("删除");
     //删除锚点数据
-    //移除锚点
-    //关闭笔记弹窗
+    delAnchorInChromeStorage(note.getAttribute('data-id', () => {
+        //移除锚点
+        body.removeChild(document.getElementById(note.getAttribute('data-id')));
+        //关闭笔记弹窗
+        note.style.display = 'none';
+    }));
+
 };
 save.onclick = function() {
     note_content_block.contentEditable = false;
-    for (let i in anchor_list) {
-        if (anchor_list[i].id === note.getAttribute('data-id')) {
-            anchor_list[i].note = note_content_block.textContent;
-        }
-    }
+    saveAnchorInChromeStorage(note.getAttribute('data-id'), note_content_block.textContent, () => {});
 };
 
 

@@ -1,11 +1,11 @@
 function getChromeData(key) {
-    chrome.storage.local.get(key);
+    return chrome.storage.local.get(key);
 }
 
 function saveChromeData(key, value) {
     chrome.storage.local.set({
         [key]: value
-    });
+    }).then(result => console.log('save data', value));
 }
 
 function addAnchorInChromeStorage(anchor) {
@@ -20,6 +20,7 @@ function findAnchorInChromeStorage(anchorId, func) {
         for (let i = 0; i < result[location.href].lenght; i++) {
             if (result[location.href][i].id === anchorId) {
                 func(result[location.href][i]);
+                return;
             }
         }
     })
