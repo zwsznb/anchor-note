@@ -15,6 +15,12 @@ function addAnchorInChromeStorage(anchor) {
     });
 }
 
+function getAnchorCountInChromeStorage(func) {
+    getChromeData(location.href).then(result => {
+        func(result[location.href].length);
+    });
+}
+
 function findAnchorInChromeStorage(anchorId, func) {
     getChromeData(location.href).then(result => {
         for (let i = 0; i < result[location.href].length; i++) {

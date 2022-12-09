@@ -15,7 +15,7 @@ let edit = createButton('edit_color', 'edit');
 let del = createButton('delete_color', 'del');
 let save = createButton('save_color', 'save');
 edit.onclick = function() {
-    if (note_content_block.textContent === '添加笔记') {
+    if (note_content_block.textContent === 'add something...') {
         note_content_block.innerText = '';
     }
     note_content_block.contentEditable = true;
