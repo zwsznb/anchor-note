@@ -3,7 +3,9 @@ let body = document.getElementsByTagName('body')[0];
 let add_button = document.createElement('div');
 let symbol = document.createElement('span');
 let anchor_list = [];
-
+getChromeData(result => {
+    console.log(result);
+});
 getAnchorCountInChromeStorage((count) => {
     if (count === 0) {
         symbol.innerText = '+';
@@ -64,7 +66,7 @@ function init_anchor() {
                 note.style.display = 'block';
                 note.setAttribute('data-id', this.id);
                 findAnchorInChromeStorage(this.id, (anchor) => {
-                    note_content_block.innerText = anchor.note === '' ? "添加笔记" : anchor.note;
+                    note_content_block.innerText = anchor.note === '' ? "add something..." : anchor.note;
                 })
             };
             anchor.setAttribute('data-ratio', result[location.href][i].top_percent);

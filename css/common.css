@@ -55,6 +55,7 @@ body {
 
 .button_box {
     display: flex;
+    justify-content: space-between;
 }
 
 .edit_color {
