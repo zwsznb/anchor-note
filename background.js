@@ -29,6 +29,8 @@ function getUrl(tab) {
     let url = '';
     if (tab.url.includes('#')) {
         url = tab.url.split('#')[0];
+    } else if (tab.url.includes('?')) {
+        url = tab.url.split('?')[0];
     } else {
         url = tab.url;
     }
