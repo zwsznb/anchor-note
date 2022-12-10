@@ -51,10 +51,10 @@ function guid() {
 
 
 function initAnchor() {
-    getChromeData(location.href).then(result => {
-        for (let i = 0; i < result[location.href].length; i++) {
+    getChromeData(getUrl()).then(result => {
+        for (let i = 0; i < result[getUrl()].length; i++) {
             let anchor = document.createElement("div");
-            let anchor_data = result[location.href][i];
+            let anchor_data = result[getUrl()][i];
             //持久化存储,存取锚点用百分比,body.offsetHeight
             anchor.className += ' anchor';
             anchor.id = anchor_data.id;
