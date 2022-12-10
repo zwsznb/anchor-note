@@ -1,5 +1,4 @@
 function getChromeData(key) {
-    console.log(key);
     return chrome.storage.local.get(key);
 }
 
@@ -48,7 +47,6 @@ function delAnchorInChromeStorage(anchorId, func) {
 
 function saveAnchorInChromeStorage(anchorId, note, func) {
     getChromeData(getUrl()).then(result => {
-        console.log(result[getUrl()], anchorId);
         for (let i = 0; i < result[getUrl()].length; i++) {
             if (result[getUrl()][i].id === anchorId) {
                 result[getUrl()][i].note = note;

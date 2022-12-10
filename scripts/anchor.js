@@ -3,9 +3,6 @@ let body = document.getElementsByTagName('body')[0];
 let add_button = document.createElement('div');
 let symbol = document.createElement('span');
 let anchor_list = [];
-getChromeData(result => {
-    console.log(result);
-});
 getAnchorCountInChromeStorage((count) => {
     if (count === 0) {
         symbol.innerText = '+';

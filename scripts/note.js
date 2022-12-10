@@ -33,7 +33,6 @@ del.onclick = function() {
 };
 save.onclick = function() {
     note_content_block.contentEditable = false;
-    console.log(note_content_block.textContent);
     saveAnchorInChromeStorage(note.getAttribute('data-id'), note_content_block.textContent, () => {});
 };
 
