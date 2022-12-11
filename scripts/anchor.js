@@ -80,7 +80,7 @@ function addEventForAnchor(anchor) {
         }
         note.setAttribute('data-id', this.id);
         findAnchorInChromeStorage(this.id, (anchor) => {
-            note_content_block.innerText = anchor.note === '' ? "add something..." : anchor.note;
+            note_content_block.innerHTML = anchor.note === '' ? "add something..." : anchor.note;
         })
     };
 }

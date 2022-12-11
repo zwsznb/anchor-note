@@ -14,13 +14,13 @@ note.onclick = (e) => {
 let edit = createButton('edit_color', 'edit');
 let del = createButton('delete_color', 'del');
 let save = createButton('save_color', 'save');
-edit.onclick = function() {
+edit.onclick = function () {
     if (note_content_block.textContent === 'add something...') {
         note_content_block.innerText = '';
     }
     note_content_block.contentEditable = true;
 };
-del.onclick = function() {
+del.onclick = function () {
     console.log("删除");
     //删除锚点数据
     delAnchorInChromeStorage(note.getAttribute('data-id'), () => {
@@ -31,9 +31,9 @@ del.onclick = function() {
     });
 
 };
-save.onclick = function() {
+save.onclick = function () {
     note_content_block.contentEditable = false;
-    saveAnchorInChromeStorage(note.getAttribute('data-id'), note_content_block.textContent, () => {});
+    saveAnchorInChromeStorage(note.getAttribute('data-id'), note_content_block.innerHTML, () => { });
 };
 
 
