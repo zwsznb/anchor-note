@@ -71,6 +71,13 @@ function addEventForAnchor(anchor) {
     }
     anchor.onmouseover = function () {
         note.style.display = 'block';
+        let radio = this.getAttribute('data-ratio');
+        let note_height = note.style.height.split('px')[0];
+        if ((1 - radio) * window.innerHeight <= note_height) {
+            note.style.top = `${window.innerHeight - note_height}px`;
+        } else {
+            note.style.top = `${window.innerHeight * this.getAttribute('data-ratio')}px`;
+        }
         note.setAttribute('data-id', this.id);
         findAnchorInChromeStorage(this.id, (anchor) => {
             note_content_block.innerText = anchor.note === '' ? "add something..." : anchor.note;
